@@ -1,25 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Container } from "./Components/Style/Container";
+import { ThemeProvider } from "styled-components/dist/base";
+import "./App.css";
+import InputForm from "./Components/InputForm";
+import { GlobalStyles } from "./Components/Style/GlobalStyles";
+import { SignleTodo } from "./Components/model";
+import TodoList from "./Components/TodoList";
 
 function App() {
+  const [input, setInput] = useState("");
+  const [todos, setTodos] = useState<SignleTodo[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input) {
+      setTodos([
+        ...todos,
+        {
+          id: Date.now(),
+          todo: input,
+          isDone: false,
+        },
+      ]);
+      setInput("");
+    }
+    console.log(todos);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <GlobalStyles />
+      <InputForm
+        input={input}
+        setInput={setInput}
+        handleSubmit={handleSubmit}
+      />
+
+      <TodoList todos={todos} setTodos={setTodos} />
+    </Container>
   );
 }
 
