@@ -11,6 +11,21 @@ const Todo = styled.div`
   border-radius: 8px;
   background: #fff;
 
+  &:hover {
+    background: #e5e5e7;
+    transform: scale(1.03);
+    transition: 130ms;
+
+    p {
+      display: flex;
+      transition: 200ms;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
   div {
     display: flex;
     gap: 30px;
@@ -24,14 +39,15 @@ const Todo = styled.div`
     input {
       width: 19px;
       height: 19px;
-      background-color: #eaebed;
       display: flex;
       margin: auto;
     }
     p {
       border-radius: 8px;
-      background: rgba(160, 172, 231, 0.1);
-      display: flex;
+      background: #fff;
+      color: #80848a;
+      font-size: 14px;
+      display: none;
       padding: 4px 8px;
       align-items: flex-start;
       gap: 10px;
@@ -73,7 +89,7 @@ const TodoList = ({ todos, setTodos }: Props) => {
   return (
     <>
       {todos.map((todo) => (
-        <Todo>
+        <Todo key={todo.id}>
           <div>
             <input type="checkbox" onClick={() => isActive(todo.id)} />
             {todo.isDone ? (
@@ -83,8 +99,11 @@ const TodoList = ({ todos, setTodos }: Props) => {
             )}
           </div>
           <div>
-            <p>Date</p>
-            <span onClick={() => handleDelete(todo.id)}></span>
+            <p>{todo.date}</p>
+            <span
+              style={{ borderColor: todo.color }}
+              onClick={() => handleDelete(todo.id)}
+            ></span>
           </div>
         </Todo>
       ))}

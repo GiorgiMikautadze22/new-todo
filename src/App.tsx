@@ -3,23 +3,33 @@ import { Container } from "./Components/Style/Container";
 import { ThemeProvider } from "styled-components/dist/base";
 import "./App.css";
 import InputForm from "./Components/InputForm";
-import { GlobalStyles } from "./Components/Style/GlobalStyles";
+import GlobalStyles from "./Components/Style/GlobalStyles";
 import { SignleTodo } from "./Components/model";
 import TodoList from "./Components/TodoList";
+import dayjs from "dayjs";
 
 function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState<SignleTodo[]>([]);
 
+  const random: string =
+    "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+
+  const today = new Date().toLocaleString();
+
+  const trimedInput = input.trim();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input) {
+    if (trimedInput !== "") {
       setTodos([
         ...todos,
         {
           id: Date.now(),
-          todo: input,
+          todo: trimedInput,
           isDone: false,
+          color: random,
+          date: dayjs(today).format("DD MMM"),
         },
       ]);
       setInput("");
@@ -28,16 +38,18 @@ function App() {
   };
 
   return (
-    <Container>
+    <>
       <GlobalStyles />
-      <InputForm
-        input={input}
-        setInput={setInput}
-        handleSubmit={handleSubmit}
-      />
+      <Container>
+        <InputForm
+          input={trimedInput}
+          setInput={setInput}
+          handleSubmit={handleSubmit}
+        />
 
-      <TodoList todos={todos} setTodos={setTodos} />
-    </Container>
+        <TodoList todos={todos} setTodos={setTodos} />
+      </Container>
+    </>
   );
 }
 
