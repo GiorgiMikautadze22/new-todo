@@ -17,9 +17,8 @@ function App() {
 
   const today = new Date().toLocaleString();
 
-  const trimedInput = input.trim();
-
   const handleSubmit = (e: React.FormEvent) => {
+    const trimedInput = input.trim();
     e.preventDefault();
     if (trimedInput !== "") {
       setTodos([
@@ -42,7 +41,7 @@ function App() {
       <GlobalStyles />
       <Container>
         <InputForm
-          input={trimedInput}
+          input={input}
           setInput={setInput}
           handleSubmit={handleSubmit}
         />
