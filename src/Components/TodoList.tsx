@@ -13,17 +13,12 @@ const Todo = styled.div`
 
   &:hover {
     background: #e5e5e7;
-    transform: scale(1.03);
     transition: 130ms;
 
     p {
       display: flex;
       transition: 200ms;
     }
-  }
-
-  &:active {
-    transform: scale(0.98);
   }
 
   div {
